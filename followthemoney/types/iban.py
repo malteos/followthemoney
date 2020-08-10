@@ -1,16 +1,16 @@
-from rdflib import URIRef
-from stdnum import iban
-from stdnum.exceptions import ValidationError
+from rdflib import URIRef  # type: ignore
+from stdnum import iban  # type: ignore
+from stdnum.exceptions import ValidationError  # type: ignore
 
 from followthemoney.types.common import PropertyType
 from followthemoney.util import sanitize_text, defer as _
 
 
 class IbanType(PropertyType):
-    name = 'iban'
-    group = 'ibans'
-    label = _('IBAN')
-    plural = _('IBANs')
+    name = "iban"
+    group = "ibans"
+    label = _("IBAN")
+    plural = _("IBANs")
     matchable = True
     pivot = True
 
@@ -30,7 +30,7 @@ class IbanType(PropertyType):
         return value[:2].lower()
 
     def rdf(self, value):
-        return URIRef('iban:%s' % value)
+        return URIRef("iban:%s" % value)
 
     def node_id(self, value):
         return str(self.rdf(value.upper()))

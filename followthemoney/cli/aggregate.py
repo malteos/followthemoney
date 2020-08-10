@@ -1,13 +1,16 @@
 import click
+import logging
 from followthemoney.namespace import Namespace
 
 from followthemoney.cli.cli import cli
 from followthemoney.cli.util import read_entity, write_object
 
+log = logging.getLogger(__name__)
 
-@cli.command('aggregate', help="Aggregate multiple fragments of entities")
-@click.option('-i', '--infile', type=click.File('r'), default='-')  # noqa
-@click.option('-o', '--outfile', type=click.File('w'), default='-')  # noqa
+
+@cli.command("aggregate", help="Aggregate multiple fragments of entities")
+@click.option("-i", "--infile", type=click.File("r"), default="-")  # noqa
+@click.option("-o", "--outfile", type=click.File("w"), default="-")  # noqa
 def aggregate(infile, outfile):
     buffer = {}
     namespace = Namespace(None)

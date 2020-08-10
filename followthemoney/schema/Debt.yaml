@@ -2,10 +2,12 @@ Debt:
   label: "Debt"
   plural: "Debts"
   description: "A monetary debt between two parties."
-  extends: 
+  matchable: false
+  extends:
     - Interval
     - Value
-  matchable: false
+  required:
+    - debtor
   featured:
     - debtor
     - creditor

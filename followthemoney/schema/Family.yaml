@@ -8,6 +8,9 @@ Family:
     - person
     - relative
     - relationship
+  required:
+    - person
+    - relative
   edge:
     source: person
     label: "related to"

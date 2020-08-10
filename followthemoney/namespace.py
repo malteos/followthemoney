@@ -7,12 +7,13 @@ from followthemoney.util import key_bytes, get_entity_id
 class Namespace(object):
     """Namespaces are used to partition entity IDs into different units,
     which traditionally represent a dataset, collection or source."""
+
     # cf. https://github.com/alephdata/followthemoney/issues/35
-    SEP = '.'
+    SEP = "."
 
     def __init__(self, name=None):
-        self.bname = key_bytes(name) if name else b''
-        self.hmac = hmac.new(self.bname, digestmod='sha1')
+        self.bname = key_bytes(name) if name else b""
+        self.hmac = hmac.new(self.bname, digestmod="sha1")
 
     @classmethod
     def parse(cls, entity_id):
@@ -26,6 +27,11 @@ class Namespace(object):
             return (plain_id, checksum)
         except ValueError:
             return (entity_id, None)
+
+    @classmethod
+    def strip(cls, entity_id):
+        plain_id, _ = cls.parse(entity_id)
+        return plain_id
 
     def signature(self, entity_id):
         """Generate a namespace-specific signature."""
@@ -58,17 +64,17 @@ class Namespace(object):
         the namespace.
 
         An exception is made for sameAs declarations."""
-        linked = proxy.clone()
-        linked.id = self.sign(linked.id)
+        signed = proxy.clone()
+        signed.id = self.sign(proxy.id)
         for prop in proxy.iterprops():
             if prop.type != registry.entity:
                 continue
-            for value in linked.pop(prop):
+            for value in signed.pop(prop):
                 value = get_entity_id(value)
-                linked.add(prop, self.sign(value))
+                signed.add(prop, self.sign(value))
         # linked.add('sameAs', proxy.id, quiet=True)
-        linked.remove('sameAs', linked.id)
-        return linked
+        signed.remove("sameAs", signed.id)
+        return signed
 
     @classmethod
     def make(cls, name):
@@ -80,4 +86,4 @@ class Namespace(object):
         return self.bname == other.bname
 
     def __repr__(self):
-        return '<Namespace(%r)>' % self.bname
+        return "<Namespace(%r)>" % self.bname

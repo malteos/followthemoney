@@ -1,7 +1,8 @@
 from itertools import product
-from rdflib import Literal
+from rdflib import Literal  # type: ignore
 from banal import ensure_list
 from normality import stringify
+from typing import Any, Optional
 
 from followthemoney.util import get_locale
 from followthemoney.util import gettext, sanitize_text
@@ -9,48 +10,34 @@ from followthemoney.util import gettext, sanitize_text
 
 class PropertyType(object):
     """Base class for all types."""
-    name = None
-    group = None
-    label = None
-    plural = None
-    matchable = True
-    pivot = False
-    max_size = None
 
-    def validate(self, text, **kwargs):
+    name: Optional[str] = None
+    group: Optional[str] = None
+    label: Optional[str] = None
+    plural: Optional[str] = None
+    matchable: bool = True
+    pivot: bool = False
+    max_size: Optional[int] = None
+
+    def validate(self, text: Any, **kwargs):
         """Returns a boolean to indicate if this is a valid instance of
         the type."""
         cleaned = self.clean(text, **kwargs)
         return cleaned is not None
 
-    def clean(self, text, **kwargs):
+    def clean(self, text: Any, **kwargs):
         """Create a more clean, but still user-facing version of an
         instance of the type."""
         text = sanitize_text(text)
         if text is not None:
             return self.clean_text(text, **kwargs)
 
-    def clean_text(self, text, **kwargs):
+    def clean_text(self, text: Optional[str], **kwargs):
         return text
-
-    def normalize(self, text, cleaned=False, **kwargs):
-        """Create a represenation ideal for comparisons, but not to be
-        shown to the user."""
-        if not cleaned:
-            text = self.clean(text, **kwargs)
-        return ensure_list(text)
-
-    def normalize_set(self, items, **kwargs):
-        """Utility to normalize a whole set of values and get unique
-        values."""
-        values = set()
-        for item in ensure_list(items):
-            values.update(self.normalize(item, **kwargs))
-        return list(values)
 
     def join(self, values):
         values = ensure_list(values)
-        return '; '.join(values)
+        return "; ".join(values)
 
     def _specificity(self, value):
         return 1.0
@@ -88,9 +75,6 @@ class PropertyType(object):
         that it may be related to."""
         return None
 
-    def values_size(self, values):
-        return sum((len(v) for v in ensure_list(values)))
-
     def rdf(self, value):
         return Literal(value)
 
@@ -105,16 +89,13 @@ class PropertyType(object):
         return value
 
     def to_dict(self):
-        data = {
-            'label': gettext(self.label),
-            'plural': gettext(self.plural)
-        }
+        data = {"label": gettext(self.label), "plural": gettext(self.plural)}
         if self.group:
-            data['group'] = self.group
+            data["group"] = self.group
         if self.matchable:
-            data['matchable'] = True
+            data["matchable"] = True
         if self.pivot:
-            data['pivot'] = True
+            data["pivot"] = True
         return data
 
     def __eq__(self, other):
@@ -127,13 +108,13 @@ class PropertyType(object):
         return self.name
 
     def __repr__(self):
-        return '<%s()>' % type(self).__name__
+        return "<%s()>" % type(self).__name__
 
 
 class EnumType(PropertyType):
-
     def __init__(self, *args):
         self._names = {}
+        self.codes = set(self.names.keys())
 
     def _locale_names(self, locale):
         return {}
@@ -144,10 +125,6 @@ class EnumType(PropertyType):
         if locale not in self._names:
             self._names[locale] = self._locale_names(locale)
         return self._names[locale]
-
-    @property
-    def codes(self):
-        return self.names.keys()
 
     def validate(self, code, **kwargs):
         code = sanitize_text(code)
@@ -165,5 +142,5 @@ class EnumType(PropertyType):
 
     def to_dict(self):
         data = super(EnumType, self).to_dict()
-        data['values'] = self.names
+        data["values"] = self.names
         return data

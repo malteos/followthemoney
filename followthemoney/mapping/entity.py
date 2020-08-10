@@ -8,27 +8,32 @@ from followthemoney.exc import InvalidMapping
 
 
 class EntityMapping(object):
-
     def __init__(self, model, query, name, data, key_prefix=None):
         self.model = model
         self.name = name
         self.data = data
 
         self.seed = sha1(key_bytes(key_prefix))
-        self.seed.update(key_bytes(data.get('key_literal')))
+        self.seed.update(key_bytes(data.get("key_literal")))
 
-        self.keys = keys_values(data, 'key', 'keys')
-        if not len(self.keys):
-            raise InvalidMapping("No keys: %r" % name)
+        self.keys = keys_values(data, "key", "keys")
+        self.id_column = data.get("id_column")
+        if not len(self.keys) and self.id_column is None:
+            raise InvalidMapping("No keys or ID: %r" % name)
+        if len(self.keys) and self.id_column is not None:
+            msg = "Please use only keys or id_column, not both: %r" % name
+            raise InvalidMapping(msg)
 
-        self.schema = model.get(data.get('schema'))
+        self.schema = model.get(data.get("schema"))
         if self.schema is None:
-            raise InvalidMapping("Invalid schema: %s" % data.get('schema'))
+            raise InvalidMapping("Invalid schema: %s" % data.get("schema"))
 
         self.refs = set(self.keys)
+        if self.id_column:
+            self.refs.add(self.id_column)
         self.dependencies = set()
         self.properties = []
-        for name, mapping in data.get('properties', {}).items():
+        for name, mapping in data.get("properties", {}).items():
             prop = self.schema.get(name)
             if prop is None:
                 raise InvalidMapping("Invalid property: %s" % name)
@@ -44,6 +49,8 @@ class EntityMapping(object):
 
     def compute_key(self, record):
         """Generate a key for this entity, based on the given fields."""
+        if self.id_column is not None:
+            return record.get(self.id_column)
         values = [key_bytes(record.get(k)) for k in self.keys]
         digest = self.seed.copy()
         for value in sorted(values):
@@ -68,7 +75,7 @@ class EntityMapping(object):
 
         for prop in self.properties:
             if prop.prop.type != registry.country:
-                prop.map(proxy, record, entities, countries=proxy.countries)
+                prop.map(proxy, record, entities)
 
         for prop in self.properties:
             if prop.required and not proxy.has(prop.prop):
@@ -80,4 +87,4 @@ class EntityMapping(object):
         return proxy
 
     def __repr__(self):
-        return '<EntityMapping(%r)>' % self.name
+        return "<EntityMapping(%r)>" % self.name

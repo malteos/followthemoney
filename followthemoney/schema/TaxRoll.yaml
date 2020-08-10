@@ -11,6 +11,8 @@ TaxRoll:
     - income
     - wealth
     - taxPaid
+  required:
+    - taxee
   properties:
     taxee:
       label: "Taxee"

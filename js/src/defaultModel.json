@@ -94,6 +94,103 @@
         "registrationNumber"
       ]
     },
+    "Representation": {
+      "label": "Representation",
+      "plural": "Representation",
+      "schemata": [
+        "Interest",
+        "Interval",
+        "Representation"
+      ],
+      "extends": [
+        "Interest"
+      ],
+      "properties": {
+        "agent": {
+          "name": "agent",
+          "qname": "Representation:agent",
+          "label": "Agent",
+          "type": "entity",
+          "matchable": true,
+          "range": "LegalEntity",
+          "reverse": "agencyClient"
+        },
+        "client": {
+          "name": "client",
+          "qname": "Representation:client",
+          "label": "Client",
+          "type": "entity",
+          "matchable": true,
+          "range": "LegalEntity",
+          "reverse": "agentRepresentation"
+        }
+      },
+      "edge": {
+        "source": "agent",
+        "target": "client",
+        "caption": [
+          "role"
+        ],
+        "label": "represents",
+        "directed": true
+      },
+      "featured": [
+        "agent",
+        "client",
+        "role"
+      ],
+      "required": [
+        "agent",
+        "client"
+      ],
+      "description": "A mediatory, intermediary, middleman, or broker acting on behalf of a legal entity."
+    },
+    "Assessment": {
+      "label": "Assessment",
+      "plural": "Assessments",
+      "schemata": [
+        "Assessment",
+        "Thing"
+      ],
+      "extends": [
+        "Thing"
+      ],
+      "properties": {
+        "publishDate": {
+          "name": "publishDate",
+          "qname": "Assessment:publishDate",
+          "label": "Date of publishing",
+          "type": "date",
+          "matchable": true
+        },
+        "assessmentId": {
+          "name": "assessmentId",
+          "qname": "Assessment:assessmentId",
+          "label": "Assessment ID",
+          "type": "string"
+        },
+        "author": {
+          "name": "author",
+          "qname": "Assessment:author",
+          "label": "Author",
+          "type": "entity",
+          "matchable": true,
+          "range": "LegalEntity",
+          "reverse": "authoredAssessments"
+        }
+      },
+      "featured": [
+        "name",
+        "publishDate",
+        "author"
+      ],
+      "required": [
+        "name"
+      ],
+      "caption": [
+        "name"
+      ]
+    },
     "Associate": {
       "label": "Associate",
       "plural": "Associates",
@@ -147,185 +244,11 @@
         "associate",
         "relationship"
       ],
+      "required": [
+        "person",
+        "associate"
+      ],
       "description": "Non-family association between two people"
-    },
-    "Representation": {
-      "label": "Representation",
-      "plural": "Representation",
-      "schemata": [
-        "Interest",
-        "Interval",
-        "Representation"
-      ],
-      "extends": [
-        "Interest"
-      ],
-      "properties": {
-        "agent": {
-          "name": "agent",
-          "qname": "Representation:agent",
-          "label": "Agent",
-          "type": "entity",
-          "matchable": true,
-          "range": "LegalEntity",
-          "reverse": "agencyClient"
-        },
-        "client": {
-          "name": "client",
-          "qname": "Representation:client",
-          "label": "Client",
-          "type": "entity",
-          "matchable": true,
-          "range": "LegalEntity",
-          "reverse": "agentRepresentation"
-        }
-      },
-      "edge": {
-        "source": "agent",
-        "target": "client",
-        "caption": [
-          "role"
-        ],
-        "label": "represents",
-        "directed": true
-      },
-      "featured": [
-        "agent",
-        "client",
-        "role"
-      ],
-      "description": "A mediatory, intermediary, middleman, or broker acting on behalf of a legal entity."
-    },
-    "Record": {
-      "label": "Record",
-      "plural": "Records",
-      "schemata": [
-        "Record"
-      ],
-      "extends": [],
-      "properties": {
-        "index": {
-          "name": "index",
-          "qname": "Record:index",
-          "label": "Index",
-          "type": "number"
-        },
-        "indexText": {
-          "name": "indexText",
-          "qname": "Record:indexText",
-          "label": "Index text",
-          "type": "text",
-          "hidden": true
-        }
-      },
-      "abstract": true,
-      "generated": true
-    },
-    "Row": {
-      "label": "Row",
-      "plural": "Rows",
-      "schemata": [
-        "Record",
-        "Row"
-      ],
-      "extends": [
-        "Record"
-      ],
-      "properties": {
-        "cells": {
-          "name": "cells",
-          "qname": "Row:cells",
-          "label": "Cells",
-          "type": "json",
-          "hidden": true
-        },
-        "table": {
-          "name": "table",
-          "qname": "Row:table",
-          "label": "Table",
-          "type": "entity",
-          "matchable": true,
-          "range": "Table",
-          "reverse": "rows"
-        }
-      },
-      "generated": true
-    },
-    "Page": {
-      "label": "Page",
-      "plural": "Pages",
-      "schemata": [
-        "Page",
-        "Record"
-      ],
-      "extends": [
-        "Record"
-      ],
-      "properties": {
-        "bodyText": {
-          "name": "bodyText",
-          "qname": "Page:bodyText",
-          "label": "Text",
-          "type": "text",
-          "hidden": true
-        },
-        "document": {
-          "name": "document",
-          "qname": "Page:document",
-          "label": "Document",
-          "type": "entity",
-          "matchable": true,
-          "range": "Pages",
-          "reverse": "pages"
-        },
-        "detectedLanguage": {
-          "name": "detectedLanguage",
-          "qname": "Page:detectedLanguage",
-          "label": "Auto-detected language",
-          "type": "language"
-        }
-      },
-      "generated": true
-    },
-    "Assessment": {
-      "label": "Assessment",
-      "plural": "Assessments",
-      "schemata": [
-        "Assessment",
-        "Thing"
-      ],
-      "extends": [
-        "Thing"
-      ],
-      "properties": {
-        "publishDate": {
-          "name": "publishDate",
-          "qname": "Assessment:publishDate",
-          "label": "Date of publishing",
-          "type": "date",
-          "matchable": true
-        },
-        "assessmentId": {
-          "name": "assessmentId",
-          "qname": "Assessment:assessmentId",
-          "label": "Assessment ID",
-          "type": "string"
-        },
-        "author": {
-          "name": "author",
-          "qname": "Assessment:author",
-          "label": "Author",
-          "type": "entity",
-          "matchable": true,
-          "range": "LegalEntity",
-          "reverse": "authoredAssessments"
-        }
-      },
-      "featured": [
-        "name",
-        "publishDate",
-        "author"
-      ]
     },
     "Membership": {
       "label": "Membership",
@@ -373,6 +296,13 @@
         "role",
         "startDate",
         "endDate"
+      ],
+      "required": [
+        "member",
+        "organization"
+      ],
+      "caption": [
+        "role"
       ]
     },
     "Company": {
@@ -551,10 +481,80 @@
         "registrationNumber",
         "incorporationDate"
       ],
+      "required": [
+        "name"
+      ],
       "caption": [
         "name"
       ],
       "matchable": true
+    },
+    "Mention": {
+      "label": "Mention",
+      "plural": "Mentions",
+      "schemata": [
+        "Mention"
+      ],
+      "extends": [],
+      "properties": {
+        "document": {
+          "name": "document",
+          "qname": "Mention:document",
+          "label": "Document",
+          "type": "entity",
+          "matchable": true,
+          "range": "Document",
+          "reverse": "mentionedEntities"
+        },
+        "resolved": {
+          "name": "resolved",
+          "qname": "Mention:resolved",
+          "label": "Entity",
+          "type": "entity",
+          "matchable": true,
+          "range": "LegalEntity",
+          "reverse": "mentionedBy"
+        },
+        "personMentioned": {
+          "name": "personMentioned",
+          "qname": "Mention:personMentioned",
+          "label": "Detected person name",
+          "type": "name",
+          "matchable": true
+        },
+        "companyMentioned": {
+          "name": "companyMentioned",
+          "qname": "Mention:companyMentioned",
+          "label": "Detected company name",
+          "type": "name",
+          "matchable": true
+        },
+        "contextCountry": {
+          "name": "contextCountry",
+          "qname": "Mention:contextCountry",
+          "label": "Co-occurring countries",
+          "type": "country",
+          "matchable": true,
+          "hidden": true
+        },
+        "contextPhone": {
+          "name": "contextPhone",
+          "qname": "Mention:contextPhone",
+          "label": "Co-occurring phone numbers",
+          "type": "phone",
+          "matchable": true,
+          "hidden": true
+        },
+        "contextEmail": {
+          "name": "contextEmail",
+          "qname": "Mention:contextEmail",
+          "label": "Co-occurring e-mail addresses",
+          "type": "email",
+          "matchable": true,
+          "hidden": true
+        }
+      },
+      "generated": true
     },
     "CourtCase": {
       "label": "Court case",
@@ -627,6 +627,9 @@
         "name",
         "fileDate",
         "caseNumber"
+      ],
+      "required": [
+        "name"
       ],
       "caption": [
         "name",
@@ -761,6 +764,10 @@
         "startDate",
         "endDate"
       ],
+      "required": [
+        "holder",
+        "passportNumber"
+      ],
       "caption": [
         "passportNumber"
       ],
@@ -779,6 +786,15 @@
         "Organization"
       ],
       "properties": {},
+      "featured": [
+        "name",
+        "country",
+        "legalForm",
+        "status"
+      ],
+      "required": [
+        "name"
+      ],
       "caption": [
         "name"
       ],
@@ -864,6 +880,9 @@
         "email",
         "owner"
       ],
+      "required": [
+        "username"
+      ],
       "caption": [
         "username",
         "email",
@@ -943,6 +962,9 @@
         "income",
         "wealth",
         "taxPaid"
+      ],
+      "required": [
+        "taxee"
       ],
       "description": "A tax declaration of an individual"
     },
@@ -1034,6 +1056,10 @@
         "percentage",
         "startDate",
         "endDate"
+      ],
+      "required": [
+        "owner",
+        "asset"
       ]
     },
     "Sanction": {
@@ -1101,6 +1127,9 @@
         "startDate",
         "endDate"
       ],
+      "required": [
+        "entity"
+      ],
       "caption": [
         "program"
       ],
@@ -1158,6 +1187,13 @@
         "role",
         "startDate",
         "endDate"
+      ],
+      "required": [
+        "director",
+        "organization"
+      ],
+      "caption": [
+        "role"
       ]
     },
     "Person": {
@@ -1306,6 +1342,9 @@
         "nationality",
         "birthDate"
       ],
+      "required": [
+        "name"
+      ],
       "caption": [
         "name",
         "lastName",
@@ -1420,6 +1459,9 @@
         "imoNumber",
         "type",
         "flag"
+      ],
+      "required": [
+        "name"
       ],
       "caption": [
         "name",
@@ -1551,6 +1593,9 @@
         "date",
         "location"
       ],
+      "required": [
+        "name"
+      ],
       "caption": [
         "name",
         "summary",
@@ -1652,6 +1697,10 @@
         "lotNumber",
         "decisionReason"
       ],
+      "required": [
+        "supplier",
+        "contract"
+      ],
       "description": "A contract or contract lot as awarded to a supplier."
     },
     "Debt": {
@@ -1701,6 +1750,9 @@
         "date",
         "amount"
       ],
+      "required": [
+        "debtor"
+      ],
       "description": "A monetary debt between two parties."
     },
     "LegalEntity": {
@@ -1714,6 +1766,13 @@
         "Thing"
       ],
       "properties": {
+        "name": {
+          "name": "name",
+          "qname": "LegalEntity:name",
+          "label": "Name",
+          "type": "name",
+          "matchable": true
+        },
         "email": {
           "name": "email",
           "qname": "LegalEntity:email",
@@ -1895,24 +1954,6 @@
           "range": "LegalEntity",
           "reverse": "subsidiaries"
         },
-        "subsidiaries": {
-          "name": "subsidiaries",
-          "qname": "LegalEntity:subsidiaries",
-          "label": "Subsidiaries",
-          "type": "entity",
-          "matchable": true,
-          "range": "LegalEntity",
-          "reverse": "parent"
-        },
-        "passport": {
-          "name": "passport",
-          "qname": "LegalEntity:passport",
-          "label": "Passports",
-          "type": "entity",
-          "matchable": true,
-          "range": "Passport",
-          "reverse": "holder"
-        },
         "ownedVehicles": {
           "name": "ownedVehicles",
           "qname": "LegalEntity:ownedVehicles",
@@ -1972,6 +2013,36 @@
           "matchable": true,
           "range": "Membership",
           "reverse": "member"
+        },
+        "subsidiaries": {
+          "name": "subsidiaries",
+          "qname": "LegalEntity:subsidiaries",
+          "label": "Subsidiaries",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "LegalEntity",
+          "reverse": "parent"
+        },
+        "mentionedBy": {
+          "name": "mentionedBy",
+          "qname": "LegalEntity:mentionedBy",
+          "label": "Document mentions",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "Mention",
+          "reverse": "resolved"
+        },
+        "passport": {
+          "name": "passport",
+          "qname": "LegalEntity:passport",
+          "label": "Passports",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "Passport",
+          "reverse": "holder"
         },
         "userAccounts": {
           "name": "userAccounts",
@@ -2216,8 +2287,12 @@
       },
       "featured": [
         "name",
+        "country",
         "legalForm",
-        "country"
+        "status"
+      ],
+      "required": [
+        "name"
       ],
       "caption": [
         "name",
@@ -2273,6 +2348,10 @@
         "successor",
         "date"
       ],
+      "required": [
+        "predecessor",
+        "successor"
+      ],
       "description": "Two entities that legally succeed each other."
     },
     "Thing": {
@@ -2287,9 +2366,7 @@
           "name": "name",
           "qname": "Thing:name",
           "label": "Name",
-          "type": "name",
-          "required": true,
-          "matchable": true
+          "type": "string"
         },
         "sameAs": {
           "name": "sameAs",
@@ -2425,13 +2502,6 @@
           "type": "text",
           "hidden": true
         },
-        "indexUpdatedAt": {
-          "name": "indexUpdatedAt",
-          "qname": "Thing:indexUpdatedAt",
-          "label": "Index updated at",
-          "type": "date",
-          "hidden": true
-        },
         "modifiedAt": {
           "name": "modifiedAt",
           "qname": "Thing:modifiedAt",
@@ -2483,11 +2553,24 @@
           "matchable": true,
           "range": "UnknownLink",
           "reverse": "object"
+        },
+        "documentedBy": {
+          "name": "documentedBy",
+          "qname": "Thing:documentedBy",
+          "label": "Documents",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "Documentation",
+          "reverse": "entity"
         }
       },
       "featured": [
         "name",
         "country"
+      ],
+      "required": [
+        "name"
       ],
       "caption": [
         "name"
@@ -2623,6 +2706,10 @@
         "contractDate",
         "commodities"
       ],
+      "required": [
+        "name",
+        "authority"
+      ],
       "caption": [
         "name"
       ],
@@ -2701,6 +2788,15 @@
           "matchable": true,
           "range": "BankAccount",
           "reverse": "paymentBeneficiaryAccount"
+        },
+        "contract": {
+          "name": "contract",
+          "qname": "Payment:contract",
+          "label": "Contract",
+          "type": "entity",
+          "matchable": true,
+          "range": "Contract",
+          "reverse": "paymentContract"
         }
       },
       "edge": {
@@ -2720,6 +2816,13 @@
         "date",
         "amount",
         "purpose"
+      ],
+      "required": [
+        "payer",
+        "beneficiary"
+      ],
+      "caption": [
+        "amount"
       ],
       "description": "A monetary payment between two parties."
     },
@@ -2754,17 +2857,57 @@
           "matchable": true,
           "range": "Directorship",
           "reverse": "organization"
+        },
+        "bankAccounts": {
+          "name": "bankAccounts",
+          "qname": "Organization:bankAccounts",
+          "label": "Bank accounts",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "BankAccount",
+          "reverse": "bank"
         }
       },
       "featured": [
         "name",
+        "country",
         "legalForm",
-        "country"
+        "status"
+      ],
+      "required": [
+        "name"
       ],
       "caption": [
         "name"
       ],
       "matchable": true
+    },
+    "Interest": {
+      "label": "Interest",
+      "plural": "Interest",
+      "schemata": [
+        "Interest",
+        "Interval"
+      ],
+      "extends": [
+        "Interval"
+      ],
+      "properties": {
+        "role": {
+          "name": "role",
+          "qname": "Interest:role",
+          "label": "Role",
+          "type": "string"
+        },
+        "status": {
+          "name": "status",
+          "qname": "Interest:status",
+          "label": "Status",
+          "type": "string"
+        }
+      },
+      "abstract": true
     },
     "Family": {
       "label": "Family",
@@ -2819,33 +2962,11 @@
         "relative",
         "relationship"
       ],
+      "required": [
+        "person",
+        "relative"
+      ],
       "description": "Family relationship between two people"
-    },
-    "Interest": {
-      "label": "Interest",
-      "plural": "Interest",
-      "schemata": [
-        "Interest",
-        "Interval"
-      ],
-      "extends": [
-        "Interval"
-      ],
-      "properties": {
-        "role": {
-          "name": "role",
-          "qname": "Interest:role",
-          "label": "Role",
-          "type": "string"
-        },
-        "status": {
-          "name": "status",
-          "qname": "Interest:status",
-          "label": "Status",
-          "type": "string"
-        }
-      },
-      "abstract": true
     },
     "BankAccount": {
       "label": "Bank Account",
@@ -2885,6 +3006,15 @@
           "qname": "BankAccount:bic",
           "label": "Bank Identifier Code",
           "type": "string"
+        },
+        "bank": {
+          "name": "bank",
+          "qname": "BankAccount:bank",
+          "label": "Bank",
+          "type": "entity",
+          "matchable": true,
+          "range": "Organization",
+          "reverse": "bankAccounts"
         },
         "accountType": {
           "name": "accountType",
@@ -3115,12 +3245,32 @@
         "proven": {
           "name": "proven",
           "qname": "Document:proven",
-          "label": "Extracted entities",
+          "label": "Derived entities",
           "type": "entity",
           "stub": true,
           "matchable": true,
           "range": "Thing",
           "reverse": "proof"
+        },
+        "mentionedEntities": {
+          "name": "mentionedEntities",
+          "qname": "Document:mentionedEntities",
+          "label": "Extracted names",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "Mention",
+          "reverse": "document"
+        },
+        "relatedEntities": {
+          "name": "relatedEntities",
+          "qname": "Document:relatedEntities",
+          "label": "Related entities",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "Documentation",
+          "reverse": "document"
         }
       },
       "featured": [
@@ -3128,6 +3278,9 @@
         "fileName",
         "mimeType",
         "parent"
+      ],
+      "required": [
+        "fileName"
       ],
       "caption": [
         "fileName",
@@ -3618,17 +3771,6 @@
           "type": "checksum",
           "matchable": true,
           "hidden": true
-        },
-        "rows": {
-          "name": "rows",
-          "qname": "Table:rows",
-          "label": "Rows",
-          "type": "entity",
-          "stub": true,
-          "matchable": true,
-          "hidden": true,
-          "range": "Row",
-          "reverse": "table"
         }
       },
       "featured": [
@@ -3642,6 +3784,52 @@
         "name",
         "fileName"
       ],
+      "generated": true
+    },
+    "Page": {
+      "label": "Page",
+      "plural": "Pages",
+      "schemata": [
+        "Page"
+      ],
+      "extends": [],
+      "properties": {
+        "index": {
+          "name": "index",
+          "qname": "Page:index",
+          "label": "Index",
+          "type": "number"
+        },
+        "bodyText": {
+          "name": "bodyText",
+          "qname": "Page:bodyText",
+          "label": "Text",
+          "type": "text",
+          "hidden": true
+        },
+        "document": {
+          "name": "document",
+          "qname": "Page:document",
+          "label": "Document",
+          "type": "entity",
+          "matchable": true,
+          "range": "Pages",
+          "reverse": "pages"
+        },
+        "detectedLanguage": {
+          "name": "detectedLanguage",
+          "qname": "Page:detectedLanguage",
+          "label": "Auto-detected language",
+          "type": "language"
+        },
+        "indexText": {
+          "name": "indexText",
+          "qname": "Page:indexText",
+          "label": "Index text",
+          "type": "text",
+          "hidden": true
+        }
+      },
       "generated": true
     },
     "Asset": {
@@ -3667,7 +3855,14 @@
           "range": "Ownership",
           "reverse": "asset"
         }
-      }
+      },
+      "featured": [
+        "name",
+        "amount"
+      ],
+      "caption": [
+        "name"
+      ]
     },
     "Message": {
       "label": "Message",
@@ -3774,14 +3969,16 @@
       },
       "featured": [
         "subject",
-        "bodyText",
         "date",
         "sender",
         "recipients"
       ],
+      "required": [
+        "bodyText",
+        "sender"
+      ],
       "caption": [
         "subject",
-        "bodyText",
         "title",
         "threadTopic",
         "fileName"
@@ -3801,6 +3998,12 @@
         "Asset"
       ],
       "properties": {
+        "title": {
+          "name": "title",
+          "qname": "Contract:title",
+          "label": "Contract title",
+          "type": "string"
+        },
         "authority": {
           "name": "authority",
           "qname": "Contract:authority",
@@ -3830,6 +4033,12 @@
           "label": "Procedure number",
           "type": "string"
         },
+        "procedure": {
+          "name": "procedure",
+          "qname": "Contract:procedure",
+          "label": "Contract procedure",
+          "type": "string"
+        },
         "noticeId": {
           "name": "noticeId",
           "qname": "Contract:noticeId",
@@ -3842,11 +4051,41 @@
           "label": "Number of awards",
           "type": "string"
         },
+        "status": {
+          "name": "status",
+          "qname": "Contract:status",
+          "label": "Procurement status",
+          "type": "string"
+        },
+        "method": {
+          "name": "method",
+          "qname": "Contract:method",
+          "label": "Procurement method",
+          "type": "string"
+        },
+        "criteria": {
+          "name": "criteria",
+          "qname": "Contract:criteria",
+          "label": "Contract award criteria",
+          "type": "string"
+        },
+        "classification": {
+          "name": "classification",
+          "qname": "Contract:classification",
+          "label": "Classification",
+          "type": "text"
+        },
         "cancelled": {
           "name": "cancelled",
           "qname": "Contract:cancelled",
           "label": "Cancelled?",
           "type": "string"
+        },
+        "language": {
+          "name": "language",
+          "qname": "Contract:language",
+          "label": "Language",
+          "type": "language"
         },
         "awards": {
           "name": "awards",
@@ -3856,6 +4095,16 @@
           "stub": true,
           "matchable": true,
           "range": "ContractAward",
+          "reverse": "contract"
+        },
+        "paymentContract": {
+          "name": "paymentContract",
+          "qname": "Contract:paymentContract",
+          "label": "Contractual payments",
+          "type": "entity",
+          "stub": true,
+          "matchable": true,
+          "range": "Payment",
           "reverse": "contract"
         },
         "economicActivityContract": {
@@ -3870,13 +4119,18 @@
         }
       },
       "featured": [
-        "name",
+        "title",
         "amount",
         "authority",
         "contractDate"
       ],
+      "required": [
+        "title"
+      ],
       "caption": [
-        "name"
+        "title",
+        "name",
+        "procedureNumber"
       ],
       "description": "An contract or contract lot issued by an authority. Multiple lots may be awarded to different suppliers (see ContractAward).\n"
     },
@@ -3971,6 +4225,10 @@
         "party",
         "case",
         "role"
+      ],
+      "required": [
+        "case",
+        "party"
       ]
     },
     "UnknownLink": {
@@ -4017,6 +4275,10 @@
         "subject",
         "object",
         "role"
+      ],
+      "required": [
+        "subject",
+        "object"
       ]
     },
     "Interval": {
@@ -4054,6 +4316,12 @@
           "label": "Summary",
           "type": "text"
         },
+        "description": {
+          "name": "description",
+          "qname": "Interval:description",
+          "label": "Description",
+          "type": "text"
+        },
         "recordId": {
           "name": "recordId",
           "qname": "Interval:recordId",
@@ -4086,6 +4354,14 @@
           "label": "Aleph URL",
           "type": "url",
           "matchable": true
+        },
+        "namesMentioned": {
+          "name": "namesMentioned",
+          "qname": "Interval:namesMentioned",
+          "label": "Detected names",
+          "type": "name",
+          "matchable": true,
+          "hidden": true
         },
         "indexText": {
           "name": "indexText",
@@ -4209,27 +4485,10 @@
       ],
       "caption": [
         "name",
+        "address",
         "registrationNumber"
       ],
       "description": "A piece of land or property."
-    },
-    "Land": {
-      "label": "Land",
-      "plural": "Lands",
-      "schemata": [
-        "Asset",
-        "Land",
-        "RealEstate",
-        "Thing",
-        "Value"
-      ],
-      "extends": [
-        "RealEstate"
-      ],
-      "properties": {},
-      "featured": [
-        "registrationNumber"
-      ]
     },
     "EconomicActivity": {
       "label": "Customs declaration",
@@ -4449,28 +4708,59 @@
         "ccdNumber"
       ],
       "description": "A foreign economic activity"
+    },
+    "Documentation": {
+      "label": "Documentation",
+      "plural": "Documentations",
+      "schemata": [
+        "Documentation",
+        "Interest",
+        "Interval"
+      ],
+      "extends": [
+        "Interest"
+      ],
+      "properties": {
+        "document": {
+          "name": "document",
+          "qname": "Documentation:document",
+          "label": "Document",
+          "type": "entity",
+          "matchable": true,
+          "range": "Document",
+          "reverse": "relatedEntities"
+        },
+        "entity": {
+          "name": "entity",
+          "qname": "Documentation:entity",
+          "label": "Entity",
+          "type": "entity",
+          "matchable": true,
+          "range": "Thing",
+          "reverse": "documentedBy"
+        }
+      },
+      "edge": {
+        "source": "document",
+        "target": "entity",
+        "caption": [
+          "role"
+        ],
+        "label": "documents",
+        "directed": false
+      },
+      "featured": [
+        "document",
+        "entity",
+        "role"
+      ],
+      "required": [
+        "document",
+        "entity"
+      ]
     }
   },
   "types": {
-    "url": {
-      "label": "URL",
-      "plural": "URLs",
-      "group": "urls",
-      "matchable": true,
-      "pivot": true
-    },
-    "name": {
-      "label": "Name",
-      "plural": "Names",
-      "group": "names",
-      "matchable": true,
-      "pivot": true
-    },
-    "domain": {
-      "label": "Domain",
-      "plural": "Domains",
-      "matchable": true
-    },
     "email": {
       "label": "E-Mail Address",
       "plural": "E-Mail Addresses",
@@ -4478,10 +4768,116 @@
       "matchable": true,
       "pivot": true
     },
+    "language": {
+      "label": "Language",
+      "plural": "Languages",
+      "group": "languages",
+      "values": {
+        "eng": "English",
+        "fra": "French",
+        "deu": "German",
+        "rus": "Russian",
+        "spa": "Spanish",
+        "nld": "Dutch",
+        "ron": "Romanian",
+        "kat": "Georgian",
+        "ara": "Arabic",
+        "tur": "Turkish",
+        "ltz": "Luxembourgish",
+        "ell": "Greek",
+        "lit": "Lithuanian",
+        "ukr": "Ukrainian",
+        "zho": "Chinese",
+        "bel": "Belarusian",
+        "bul": "Bulgarian",
+        "bos": "Bosnian",
+        "jpn": "Japanese",
+        "ces": "Czech",
+        "lav": "Latvian",
+        "por": "Portuguese",
+        "pol": "Polish",
+        "hye": "Armenian",
+        "hrv": "Croatian",
+        "hin": "Hindi",
+        "heb": "Hebrew",
+        "uzb": "Uzbek",
+        "mon": "Mongolian",
+        "urd": "Urdu",
+        "sqi": "Albanian",
+        "kor": "Korean",
+        "isl": "Icelandic",
+        "ita": "Italian",
+        "est": "Estonian",
+        "nor": "Norwegian",
+        "fas": "Persian",
+        "swa": "Swahili",
+        "slv": "Slovenian",
+        "slk": "Slovak",
+        "aze": "Azerbaijani",
+        "tgk": "Tajik",
+        "kaz": "Kazakh",
+        "tuk": "Turkmen",
+        "kir": "Kyrgyz",
+        "hun": "hun",
+        "dan": "Danish",
+        "afr": "Afrikaans",
+        "swe": "Swedish",
+        "srp": "Serbian",
+        "ind": "Indonesian",
+        "kan": "Kannada",
+        "mkd": "Macedonian",
+        "mlt": "Maltese",
+        "msa": "Malay",
+        "fin": "Finnish",
+        "cat": "Catalan",
+        "npi": "npi",
+        "tgl": "Tagalog",
+        "fil": "Filipino"
+      }
+    },
+    "url": {
+      "label": "URL",
+      "plural": "URLs",
+      "group": "urls",
+      "matchable": true,
+      "pivot": true
+    },
+    "json": {
+      "label": "Nested data",
+      "plural": null
+    },
+    "mimetype": {
+      "label": "MIME-Type",
+      "plural": "MIME-Types",
+      "group": "mimetypes"
+    },
+    "number": {
+      "label": "Number",
+      "plural": "Numbers"
+    },
+    "date": {
+      "label": "Date",
+      "plural": "Dates",
+      "group": "dates",
+      "matchable": true
+    },
     "ip": {
       "label": "IP-Address",
       "plural": "IP-Addresses",
       "group": "ips",
+      "matchable": true
+    },
+    "entity": {
+      "label": "Entity",
+      "plural": "Entities",
+      "group": "entities",
+      "matchable": true,
+      "pivot": true
+    },
+    "checksum": {
+      "label": "Checksum",
+      "plural": "Checksums",
+      "group": "checksums",
       "matchable": true
     },
     "iban": {
@@ -4491,18 +4887,56 @@
       "matchable": true,
       "pivot": true
     },
-    "address": {
-      "label": "Address",
-      "plural": "Addresses",
-      "group": "addresses",
-      "matchable": true,
-      "pivot": true
+    "topic": {
+      "label": "Topic",
+      "plural": "Topics",
+      "group": "topics",
+      "values": {
+        "crime": "Crime",
+        "crime.fraud": "Fraud",
+        "crime.cyber": "Cybercrime",
+        "crime.fin": "Financial crime",
+        "crime.theft": "Theft",
+        "crime.war": "War crimes",
+        "crime.boss": "Criminal leadership",
+        "crime.terror": "Terrorism",
+        "crime.traffick": "Trafficking",
+        "crime.traffick.drug": "Drug trafficking",
+        "crime.traffick.human": "Human trafficking",
+        "corp.offshore": "Offshore",
+        "corp.shell": "Shell company",
+        "gov": "Government",
+        "gov.national": "National government",
+        "gov.state": "State government",
+        "gov.muni": "Municipal government",
+        "gov.soe": "State-owned enterprise",
+        "gov.igo": "Intergovernmental organization",
+        "fin": "Financial services",
+        "fin.bank": "Bank",
+        "fin.fund": "Fund",
+        "fin.adivsor": "Financial advisor",
+        "role.pep": "Politician",
+        "role.rca": "Associate",
+        "role.judge": "Judge",
+        "role.civil": "Civil servant",
+        "role.diplo": "Diplomat",
+        "role.lawyer": "Lawyer",
+        "role.acct": "Accountant",
+        "role.spy": "Spy",
+        "role.journo": "Journalist",
+        "role.act": "Activist",
+        "pol.party": "Political party",
+        "pol.union": "Union",
+        "rel": "Religion",
+        "mil": "Military",
+        "asset.frozen": "Frozen asset",
+        "ctx.sanctioned": "Sanctioned entity",
+        "ctx.poi": "Person of interest"
+      }
     },
-    "date": {
-      "label": "Date",
-      "plural": "Dates",
-      "group": "dates",
-      "matchable": true
+    "html": {
+      "label": "HTML",
+      "plural": "HTMLs"
     },
     "phone": {
       "label": "Phone number",
@@ -4511,15 +4945,24 @@
       "matchable": true,
       "pivot": true
     },
+    "domain": {
+      "label": "Domain",
+      "plural": "Domains",
+      "matchable": true
+    },
+    "string": {
+      "label": "Label",
+      "plural": "Labels"
+    },
     "country": {
       "label": "Country",
       "plural": "Countries",
       "group": "countries",
       "matchable": true,
       "values": {
-        "zz": "Unknown Region",
+        "zz": "Global",
         "eu": "European Union",
-        "cz": "Czechia",
+        "cz": "Czech Republic",
         "xk": "Kosovo",
         "yucs": "Yugoslavia",
         "csxx": "Serbia and Montenegro",
@@ -4529,6 +4972,7 @@
         "so-som": "Somaliland",
         "gb-wls": "Wales",
         "gb-sct": "Scotland",
+        "gb-nir": "Northern Ireland",
         "md-pmr": "Transnistria",
         "ac": "Ascension Island",
         "ad": "Andorra",
@@ -4791,81 +5235,6 @@
         "zw": "Zimbabwe"
       }
     },
-    "language": {
-      "label": "Language",
-      "plural": "Languages",
-      "group": "languages",
-      "values": {
-        "eng": "English",
-        "fra": "French",
-        "deu": "German",
-        "rus": "Russian",
-        "spa": "Spanish",
-        "nld": "Dutch",
-        "ron": "Romanian",
-        "kat": "Georgian",
-        "ara": "Arabic",
-        "tur": "Turkish",
-        "ltz": "Luxembourgish",
-        "ell": "Greek",
-        "lit": "Lithuanian",
-        "ukr": "Ukrainian",
-        "zho": "Chinese",
-        "bel": "Belarusian",
-        "bul": "Bulgarian",
-        "bos": "Bosnian",
-        "jpn": "Japanese",
-        "ces": "Czech",
-        "lav": "Latvian",
-        "por": "Portuguese",
-        "pol": "Polish",
-        "hye": "Armenian",
-        "hrv": "Croatian",
-        "hin": "Hindi",
-        "heb": "Hebrew",
-        "uzb": "Uzbek",
-        "mon": "Mongolian",
-        "urd": "Urdu",
-        "sqi": "Albanian",
-        "kor": "Korean",
-        "isl": "Icelandic",
-        "ita": "Italian",
-        "est": "Estonian",
-        "nor": "Norwegian",
-        "fas": "Persian",
-        "swa": "Swahili",
-        "slv": "Slovenian",
-        "slk": "Slovak",
-        "aze": "Azerbaijani",
-        "tgk": "Tajik",
-        "kaz": "Kazakh",
-        "tuk": "Turkmen",
-        "kir": "Kyrgyz",
-        "hun": "hun",
-        "dan": "Danish",
-        "afr": "Afrikaans",
-        "swe": "Swedish",
-        "srp": "Serbian",
-        "ind": "Indonesian",
-        "kan": "Kannada",
-        "mkd": "Macedonian",
-        "mlt": "Maltese",
-        "msa": "Malay",
-        "fin": "Finnish",
-        "cat": "Catalan"
-      }
-    },
-    "mimetype": {
-      "label": "MIME-Type",
-      "plural": "MIME-Types",
-      "group": "mimetypes"
-    },
-    "checksum": {
-      "label": "Checksum",
-      "plural": "Checksums",
-      "group": "checksums",
-      "matchable": true
-    },
     "identifier": {
       "label": "Identifier",
       "plural": "Identifiers",
@@ -4873,78 +5242,23 @@
       "matchable": true,
       "pivot": true
     },
-    "entity": {
-      "label": "Entity",
-      "plural": "Entities",
-      "group": "entities",
-      "matchable": true
+    "address": {
+      "label": "Address",
+      "plural": "Addresses",
+      "group": "addresses",
+      "matchable": true,
+      "pivot": true
     },
-    "topic": {
-      "label": "Topic",
-      "plural": "Topics",
-      "group": "topics",
-      "values": {
-        "crime": "Crime",
-        "crime.fraud": "Fraud",
-        "crime.cyber": "Cybercrime",
-        "crime.fin": "Financial crime",
-        "crime.theft": "Theft",
-        "crime.war": "War crimes",
-        "crime.boss": "Criminal leadership",
-        "crime.terror": "Terrorism",
-        "crime.traffick": "Trafficking",
-        "crime.traffick.drug": "Drug trafficking",
-        "crime.traffick.human": "Human trafficking",
-        "corp.offshore": "Offshore",
-        "corp.shell": "Shell company",
-        "gov": "Government",
-        "gov.national": "National government",
-        "gov.state": "State government",
-        "gov.muni": "Municipal government",
-        "gov.soe": "State-owned enterprise",
-        "gov.igo": "Intergovernmental organization",
-        "fin": "Financial services",
-        "fin.bank": "Bank",
-        "fin.fund": "Fund",
-        "fin.adivsor": "Financial advisor",
-        "role.pep": "Politician",
-        "role.rca": "Associate",
-        "role.judge": "Judge",
-        "role.civil": "Civil servant",
-        "role.diplo": "Diplomat",
-        "role.lawyer": "Lawyer",
-        "role.acct": "Accountant",
-        "role.spy": "Spy",
-        "role.journo": "Journalist",
-        "role.act": "Activist",
-        "pol.party": "Political party",
-        "pol.union": "Union",
-        "rel": "Religion",
-        "mil": "Military",
-        "asset.frozen": "Frozen asset",
-        "ctx.sanctioned": "Sanctioned entity",
-        "ctx.poi": "Person of interest"
-      }
-    },
-    "json": {
-      "label": "Nested data",
-      "plural": null
+    "name": {
+      "label": "Name",
+      "plural": "Names",
+      "group": "names",
+      "matchable": true,
+      "pivot": true
     },
     "text": {
       "label": "Text",
-      "plural": null
-    },
-    "html": {
-      "label": "HTML",
-      "plural": null
-    },
-    "string": {
-      "label": "Label",
-      "plural": "Labels"
-    },
-    "number": {
-      "label": "Number",
-      "plural": "Numbers"
+      "plural": "Texts"
     }
   }
 }

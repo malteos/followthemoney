@@ -11,6 +11,9 @@ Passport:
     - holder
     - startDate
     - endDate
+  required:
+    - holder
+    - passportNumber
   caption:
     - passportNumber
   properties:
@@ -19,6 +22,7 @@ Passport:
       type: entity
       range: LegalEntity
       reverse:
+        label: "Passports"
         name: passport
     type:
       label: "Document type"

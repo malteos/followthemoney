@@ -8,13 +8,15 @@ Document:
   matchable: false
   generated: true
   featured:
-  - title
-  - fileName
-  - mimeType
-  - parent
+    - title
+    - fileName
+    - mimeType
+    - parent
+  required:
+    - fileName
   caption:
-  - fileName
-  - title
+    - fileName
+    - title
   properties:
     contentHash:
       label: "Checksum"

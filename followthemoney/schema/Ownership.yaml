@@ -9,6 +9,9 @@ Ownership:
     - percentage
     - startDate
     - endDate
+  required:
+    - owner
+    - asset
   edge: # OWNER owns ASSET
     source: owner
     label: "owns"

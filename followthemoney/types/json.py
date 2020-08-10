@@ -6,9 +6,9 @@ from followthemoney.util import sanitize_text, defer as _
 
 
 class JsonType(PropertyType):
-    name = 'json'
+    name = "json"
     group = None
-    label = _('Nested data')
+    label = _("Nested data")
     matchable = False
 
     def pack(self, obj):
@@ -32,9 +32,6 @@ class JsonType(PropertyType):
         else:
             obj = sanitize_text(obj)
         return obj
-
-    def normalize(self, obj, cleaned=False, **kwargs):
-        return [] if obj is None else [obj]
 
     def join(self, values):
         """Turn multiple values into a JSON array."""

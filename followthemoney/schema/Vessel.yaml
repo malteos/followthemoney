@@ -9,6 +9,8 @@ Vessel:
     - imoNumber
     - type
     - flag
+  required:
+    - name
   caption:
     - name
     - imoNumber

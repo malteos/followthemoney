@@ -7,6 +7,10 @@ Assessment:
     - name
     - publishDate
     - author
+  caption:
+    - name
+  required:
+    - name
   properties:
     publishDate:
       label: "Date of publishing"

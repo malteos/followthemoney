@@ -1,5 +1,5 @@
 import itertools
-from Levenshtein import jaro
+from Levenshtein import jaro  # type: ignore
 from normality import normalize
 from followthemoney.types import registry
 from followthemoney.util import dampen, shortest
@@ -27,9 +27,7 @@ MATCH_WEIGHTS = {
 
 
 def compare(model, left, right):
-    """Compare two entities and return number between 0 and 1.
-    Returned number indicates probability that two entities are the same.
-    """
+    """Compare two entities and return a match score."""
     left = model.get_proxy(left)
     right = model.get_proxy(right)
     if right.schema not in list(left.schema.matchable_schemata):
@@ -50,7 +48,7 @@ def compare(model, left, right):
         if not len(left_values) or not len(right_values):
             continue
         prop_score = prop.type.compare_sets(left_values, right_values)
-        score += (prop_score * weight)
+        score += prop_score * weight
     return score
 
 

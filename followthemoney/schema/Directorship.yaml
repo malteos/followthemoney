@@ -9,6 +9,11 @@ Directorship:
     - role
     - startDate
     - endDate
+  required:
+    - director
+    - organization
+  caption:
+    - role
   edge:
     source: director
     label: "directs"

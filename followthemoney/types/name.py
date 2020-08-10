@@ -1,7 +1,7 @@
 from banal import ensure_list, first
 from normality import slugify
-from Levenshtein import jaro_winkler, setmedian
 from normality.cleaning import collapse_spaces, strip_quotes
+from Levenshtein import jaro_winkler, setmedian  # type: ignore
 
 from followthemoney.types.common import PropertyType
 from followthemoney.util import dampen, sanitize_text
@@ -9,18 +9,17 @@ from followthemoney.util import defer as _
 
 
 class NameType(PropertyType):
-    name = 'name'
-    group = 'names'
-    label = _('Name')
-    plural = _('Names')
+    name = "name"
+    group = "names"
+    label = _("Name")
+    plural = _("Names")
     matchable = True
     pivot = True
 
     def clean_text(self, name, **kwargs):
         """Basic clean-up."""
         name = strip_quotes(name)
-        name = collapse_spaces(name)
-        return name
+        return collapse_spaces(name)
 
     def pick(self, values):
         values = [sanitize_text(v) for v in ensure_list(values)]
@@ -37,4 +36,4 @@ class NameType(PropertyType):
         return jaro_winkler(left, right)
 
     def node_id(self, value):
-        return 'name:%s' % slugify(value)
+        return "name:%s" % slugify(value)

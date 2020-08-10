@@ -9,6 +9,11 @@ Membership:
     - role
     - startDate
     - endDate
+  required:
+    - member
+    - organization
+  caption:
+    - role
   edge:
     source: member
     label: "belongs to"

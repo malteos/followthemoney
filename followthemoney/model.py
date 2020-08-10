@@ -26,12 +26,16 @@ class Model(object):
             schema.generate()
         for prop in self.properties:
             self.qnames[prop.qname] = prop
+            # FIXME: stubs are not correctly assigned
+            for schema in prop.schema.descendants:
+                if prop.name not in schema.properties:
+                    schema.properties[prop.name] = prop
 
     def _load(self, filepath):
-        with open(filepath, 'r') as fh:
+        with open(filepath, "r") as fh:
             data = yaml.safe_load(fh)
             if not isinstance(data, dict):
-                raise InvalidModel('Model file is not a mapping.')
+                raise InvalidModel("Model file is not a mapping.")
             for name, config in data.items():
                 self.schemata[name] = Schema(self, name, config)
 
@@ -83,27 +87,22 @@ class Model(object):
             return left
         if right.is_a(left):
             return right
-        common = list(left.schemata.intersection(right.schemata))
-        if not len(common):
-            msg = "No common ancestor: %s and %s"
-            raise InvalidData(msg % (left, right))
-
-        specific = common[0]
-        for schema in common[1:]:
-            if schema.is_a(specific):
-                specific = schema
-        return specific
+        # for schema in self.schemata.values():
+        #     if schema.is_a(left) and schema.is_a(right):
+        #         return schema
+        msg = "No common schema: %s and %s"
+        raise InvalidData(msg % (left, right))
 
     def make_entity(self, schema, key_prefix=None):
-        return EntityProxy(self, {'schema': schema}, key_prefix=key_prefix)
+        return EntityProxy(self, {"schema": schema}, key_prefix=key_prefix)
 
     def get_proxy(self, data, cleaned=True):
         return EntityProxy.from_dict(self, data, cleaned=cleaned)
 
     def to_dict(self):
         return {
-            'schemata': {s.name: s.to_dict() for s in self.schemata.values()},
-            'types': {t.name: t.to_dict() for t in registry.types}
+            "schemata": {s.name: s.to_dict() for s in self.schemata.values()},
+            "types": {t.name: t.to_dict() for t in registry.types},
         }
 
     def __iter__(self):

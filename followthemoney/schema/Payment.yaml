@@ -2,16 +2,21 @@ Payment:
   label: "Payment"
   plural: "Payments"
   description: "A monetary payment between two parties."
-  extends: 
+  matchable: false
+  extends:
     - Interval
     - Value
-  matchable: false
   featured:
     - payer
     - beneficiary
     - date
     - amount
     - purpose
+  required:
+    - payer
+    - beneficiary
+  caption:
+    - amount
   edge:
     source: payer
     label: "paid"
@@ -60,3 +65,11 @@ Payment:
         label: "Payments received"
       type: entity
       range: BankAccount
+    contract:
+      label: "Contract"
+      plural: "Contracts"
+      reverse:
+        name: paymentContract
+        label: "Contractual payments"
+      type: entity
+      range: Contract

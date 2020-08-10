@@ -101,6 +101,11 @@ ftm:Document a rdfs:Class ;
     rdfs:subClassOf ftm:Analyzable,
         ftm:Thing .
 
+ftm:Documentation a rdfs:Class ;
+    rdfs:label "Documentation" ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:subClassOf ftm:Interest .
+
 ftm:EconomicActivity a rdfs:Class ;
     rdfs:label "Customs declaration" ;
     rdfs:comment "A foreign economic activity" ;
@@ -151,11 +156,6 @@ ftm:Interval a rdfs:Class ;
     rdfs:label "Interval" ;
     rdfs:isDefinedBy ftm: .
 
-ftm:Land a rdfs:Class ;
-    rdfs:label "Land" ;
-    rdfs:isDefinedBy ftm: ;
-    rdfs:subClassOf ftm:RealEstate .
-
 ftm:LegalEntity a rdfs:Class ;
     rdfs:label "Legal entity" ;
     rdfs:comment "A legal entity may be a person or a company." ;
@@ -172,6 +172,10 @@ ftm:Membership a rdfs:Class ;
     rdfs:label "Membership" ;
     rdfs:isDefinedBy ftm: ;
     rdfs:subClassOf ftm:Interest .
+
+ftm:Mention a rdfs:Class ;
+    rdfs:label "Mention" ;
+    rdfs:isDefinedBy ftm: .
 
 ftm:Message a rdfs:Class ;
     rdfs:label "Message" ;
@@ -198,8 +202,7 @@ ftm:Package a rdfs:Class ;
 
 ftm:Page a rdfs:Class ;
     rdfs:label "Page" ;
-    rdfs:isDefinedBy ftm: ;
-    rdfs:subClassOf ftm:Record .
+    rdfs:isDefinedBy ftm: .
 
 ftm:Pages a rdfs:Class ;
     rdfs:label "Document" ;
@@ -236,20 +239,11 @@ ftm:RealEstate a rdfs:Class ;
     rdfs:isDefinedBy ftm: ;
     rdfs:subClassOf ftm:Asset .
 
-ftm:Record a rdfs:Class ;
-    rdfs:label "Record" ;
-    rdfs:isDefinedBy ftm: .
-
 ftm:Representation a rdfs:Class ;
     rdfs:label "Representation" ;
     rdfs:comment "A mediatory, intermediary, middleman, or broker acting on behalf of a legal entity." ;
     rdfs:isDefinedBy ftm: ;
     rdfs:subClassOf ftm:Interest .
-
-ftm:Row a rdfs:Class ;
-    rdfs:label "Row" ;
-    rdfs:isDefinedBy ftm: ;
-    rdfs:subClassOf ftm:Record .
 
 ftm:Sanction a rdfs:Class ;
     rdfs:label "Sanction" ;
@@ -338,7 +332,8 @@ dct:format a rdf:Property ;
 
 dct:language a rdf:Property ;
     rdfs:label "Language" ;
-    rdfs:domain ftm:Document ;
+    rdfs:domain ftm:Contract,
+        ftm:Document ;
     rdfs:isDefinedBy ftm: .
 
 <http://www.w3.org/2004/02/skos/core#altLabel> a rdf:Property ;
@@ -348,7 +343,8 @@ dct:language a rdf:Property ;
 
 <http://www.w3.org/2004/02/skos/core#prefLabel> a rdf:Property ;
     rdfs:label "Name" ;
-    rdfs:domain ftm:Thing ;
+    rdfs:domain ftm:LegalEntity,
+        ftm:Thing ;
     rdfs:isDefinedBy ftm: .
 
 <http://xmlns.com/foaf/0.1/birthday> a rdf:Property ;
@@ -640,11 +636,26 @@ dct:language a rdf:Property ;
     rdfs:domain ftm:Contract ;
     rdfs:isDefinedBy ftm: .
 
+<https://w3id.org/ftm#Contract:classification> a rdf:Property ;
+    rdfs:label "Classification" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: .
+
 <https://w3id.org/ftm#Contract:contractDate> a rdf:Property ;
     rdfs:label "Contract date" ;
     rdfs:domain ftm:Contract ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range xsd:dateTime .
+
+<https://w3id.org/ftm#Contract:criteria> a rdf:Property ;
+    rdfs:label "Contract award criteria" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Contract:method> a rdf:Property ;
+    rdfs:label "Procurement method" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: .
 
 <https://w3id.org/ftm#Contract:noticeId> a rdf:Property ;
     rdfs:label "Contract Award Notice ID" ;
@@ -656,8 +667,23 @@ dct:language a rdf:Property ;
     rdfs:domain ftm:Contract ;
     rdfs:isDefinedBy ftm: .
 
+<https://w3id.org/ftm#Contract:procedure> a rdf:Property ;
+    rdfs:label "Contract procedure" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: .
+
 <https://w3id.org/ftm#Contract:procedureNumber> a rdf:Property ;
     rdfs:label "Procedure number" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Contract:status> a rdf:Property ;
+    rdfs:label "Procurement status" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Contract:title> a rdf:Property ;
+    rdfs:label "Contract title" ;
     rdfs:domain ftm:Contract ;
     rdfs:isDefinedBy ftm: .
 
@@ -1002,6 +1028,11 @@ dct:language a rdf:Property ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range xsd:dateTime .
 
+<https://w3id.org/ftm#Interval:description> a rdf:Property ;
+    rdfs:label "Description" ;
+    rdfs:domain ftm:Interval ;
+    rdfs:isDefinedBy ftm: .
+
 <https://w3id.org/ftm#Interval:endDate> a rdf:Property ;
     rdfs:label "End date" ;
     rdfs:domain ftm:Interval ;
@@ -1018,6 +1049,11 @@ dct:language a rdf:Property ;
     rdfs:domain ftm:Interval ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range xsd:dateTime .
+
+<https://w3id.org/ftm#Interval:namesMentioned> a rdf:Property ;
+    rdfs:label "Detected names" ;
+    rdfs:domain ftm:Interval ;
+    rdfs:isDefinedBy ftm: .
 
 <https://w3id.org/ftm#Interval:publisher> a rdf:Property ;
     rdfs:label "Publishing source" ;
@@ -1204,6 +1240,31 @@ dct:language a rdf:Property ;
     rdfs:domain ftm:License ;
     rdfs:isDefinedBy ftm: .
 
+<https://w3id.org/ftm#Mention:companyMentioned> a rdf:Property ;
+    rdfs:label "Detected company name" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Mention:contextCountry> a rdf:Property ;
+    rdfs:label "Co-occurring countries" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Mention:contextEmail> a rdf:Property ;
+    rdfs:label "Co-occurring e-mail addresses" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Mention:contextPhone> a rdf:Property ;
+    rdfs:label "Co-occurring phone numbers" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Mention:personMentioned> a rdf:Property ;
+    rdfs:label "Detected person name" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: .
+
 <https://w3id.org/ftm#Message:inReplyTo> a rdf:Property ;
     rdfs:label "In Reply To" ;
     rdfs:comment "Message ID of the preceding message in the thread" ;
@@ -1267,6 +1328,16 @@ dct:language a rdf:Property ;
 
 <https://w3id.org/ftm#Page:detectedLanguage> a rdf:Property ;
     rdfs:label "Auto-detected language" ;
+    rdfs:domain ftm:Page ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Page:index> a rdf:Property ;
+    rdfs:label "Index" ;
+    rdfs:domain ftm:Page ;
+    rdfs:isDefinedBy ftm: .
+
+<https://w3id.org/ftm#Page:indexText> a rdf:Property ;
+    rdfs:label "Index text" ;
     rdfs:domain ftm:Page ;
     rdfs:isDefinedBy ftm: .
 
@@ -1466,21 +1537,6 @@ dct:language a rdf:Property ;
     rdfs:domain ftm:RealEstate ;
     rdfs:isDefinedBy ftm: .
 
-<https://w3id.org/ftm#Record:index> a rdf:Property ;
-    rdfs:label "Index" ;
-    rdfs:domain ftm:Record ;
-    rdfs:isDefinedBy ftm: .
-
-<https://w3id.org/ftm#Record:indexText> a rdf:Property ;
-    rdfs:label "Index text" ;
-    rdfs:domain ftm:Record ;
-    rdfs:isDefinedBy ftm: .
-
-<https://w3id.org/ftm#Row:cells> a rdf:Property ;
-    rdfs:label "Cells" ;
-    rdfs:domain ftm:Row ;
-    rdfs:isDefinedBy ftm: .
-
 <https://w3id.org/ftm#Sanction:authority> a rdf:Property ;
     rdfs:label "Authority" ;
     rdfs:domain ftm:Sanction ;
@@ -1586,12 +1642,6 @@ dct:language a rdf:Property ;
     rdfs:label "Index text" ;
     rdfs:domain ftm:Thing ;
     rdfs:isDefinedBy ftm: .
-
-<https://w3id.org/ftm#Thing:indexUpdatedAt> a rdf:Property ;
-    rdfs:label "Index updated at" ;
-    rdfs:domain ftm:Thing ;
-    rdfs:isDefinedBy ftm: ;
-    rdfs:range xsd:dateTime .
 
 <https://w3id.org/ftm#Thing:keywords> a rdf:Property ;
     rdfs:label "Keywords" ;
@@ -1851,6 +1901,13 @@ owl:sameAs a rdf:Property ;
     rdfs:range <http://xmlns.com/foaf/0.1/Person> ;
     owl:inverseOf <https://w3id.org/ftm#Person:associates> .
 
+<https://w3id.org/ftm#BankAccount:bank> a rdf:Property ;
+    rdfs:label "Bank" ;
+    rdfs:domain ftm:BankAccount ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Organization ;
+    owl:inverseOf <https://w3id.org/ftm#Organization:bankAccounts> .
+
 <https://w3id.org/ftm#BankAccount:contractBankAccount> a rdf:Property ;
     rdfs:label "Customs declarations" ;
     rdfs:domain ftm:BankAccount ;
@@ -1920,6 +1977,13 @@ owl:sameAs a rdf:Property ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range ftm:EconomicActivity ;
     owl:inverseOf <https://w3id.org/ftm#EconomicActivity:contract> .
+
+<https://w3id.org/ftm#Contract:paymentContract> a rdf:Property ;
+    rdfs:label "Contractual payments" ;
+    rdfs:domain ftm:Contract ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Payment ;
+    owl:inverseOf <https://w3id.org/ftm#Payment:contract> .
 
 <https://w3id.org/ftm#ContractAward:contract> a rdf:Property ;
     rdfs:label "Contract" ;
@@ -1992,12 +2056,40 @@ owl:sameAs a rdf:Property ;
     rdfs:range ftm:Folder ;
     owl:inverseOf <https://w3id.org/ftm#Folder:descendants> .
 
+<https://w3id.org/ftm#Document:mentionedEntities> a rdf:Property ;
+    rdfs:label "Extracted names" ;
+    rdfs:domain ftm:Document ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Mention ;
+    owl:inverseOf <https://w3id.org/ftm#Mention:document> .
+
 <https://w3id.org/ftm#Document:proven> a rdf:Property ;
-    rdfs:label "Extracted entities" ;
+    rdfs:label "Derived entities" ;
     rdfs:domain ftm:Document ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range ftm:Thing ;
     owl:inverseOf <https://w3id.org/ftm#Thing:proof> .
+
+<https://w3id.org/ftm#Document:relatedEntities> a rdf:Property ;
+    rdfs:label "Related entities" ;
+    rdfs:domain ftm:Document ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Documentation ;
+    owl:inverseOf <https://w3id.org/ftm#Documentation:document> .
+
+<https://w3id.org/ftm#Documentation:document> a rdf:Property ;
+    rdfs:label "Document" ;
+    rdfs:domain ftm:Documentation ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Document ;
+    owl:inverseOf <https://w3id.org/ftm#Document:relatedEntities> .
+
+<https://w3id.org/ftm#Documentation:entity> a rdf:Property ;
+    rdfs:label "Entity" ;
+    rdfs:domain ftm:Documentation ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Thing ;
+    owl:inverseOf <https://w3id.org/ftm#Thing:documentedBy> .
 
 <https://w3id.org/ftm#EconomicActivity:bankAccount> a rdf:Property ;
     rdfs:label "Bank Account" ;
@@ -2275,6 +2367,13 @@ owl:sameAs a rdf:Property ;
     rdfs:range ftm:Membership ;
     owl:inverseOf <https://w3id.org/ftm#Membership:member> .
 
+<https://w3id.org/ftm#LegalEntity:mentionedBy> a rdf:Property ;
+    rdfs:label "Document mentions" ;
+    rdfs:domain ftm:LegalEntity ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Mention ;
+    owl:inverseOf <https://w3id.org/ftm#Mention:resolved> .
+
 <https://w3id.org/ftm#LegalEntity:messagesReceived> a rdf:Property ;
     rdfs:label "Messages received" ;
     rdfs:domain ftm:LegalEntity ;
@@ -2388,6 +2487,20 @@ owl:sameAs a rdf:Property ;
     rdfs:range ftm:Organization ;
     owl:inverseOf <https://w3id.org/ftm#Organization:membershipOrganization> .
 
+<https://w3id.org/ftm#Mention:document> a rdf:Property ;
+    rdfs:label "Document" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Document ;
+    owl:inverseOf <https://w3id.org/ftm#Document:mentionedEntities> .
+
+<https://w3id.org/ftm#Mention:resolved> a rdf:Property ;
+    rdfs:label "Entity" ;
+    rdfs:domain ftm:Mention ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:LegalEntity ;
+    owl:inverseOf <https://w3id.org/ftm#LegalEntity:mentionedBy> .
+
 <https://w3id.org/ftm#Message:inReplyToMessage> a rdf:Property ;
     rdfs:label "Responding to" ;
     rdfs:domain ftm:Message ;
@@ -2429,6 +2542,13 @@ owl:sameAs a rdf:Property ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range ftm:UserAccount ;
     owl:inverseOf <https://w3id.org/ftm#UserAccount:messagesSent> .
+
+<https://w3id.org/ftm#Organization:bankAccounts> a rdf:Property ;
+    rdfs:label "Bank accounts" ;
+    rdfs:domain ftm:Organization ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:BankAccount ;
+    owl:inverseOf <https://w3id.org/ftm#BankAccount:bank> .
 
 <https://w3id.org/ftm#Organization:directorshipOrganization> a rdf:Property ;
     rdfs:label "Directors" ;
@@ -2485,6 +2605,13 @@ owl:sameAs a rdf:Property ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range ftm:BankAccount ;
     owl:inverseOf <https://w3id.org/ftm#BankAccount:paymentBeneficiaryAccount> .
+
+<https://w3id.org/ftm#Payment:contract> a rdf:Property ;
+    rdfs:label "Contract" ;
+    rdfs:domain ftm:Payment ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Contract ;
+    owl:inverseOf <https://w3id.org/ftm#Contract:paymentContract> .
 
 <https://w3id.org/ftm#Payment:payer> a rdf:Property ;
     rdfs:label "Payer" ;
@@ -2563,13 +2690,6 @@ owl:sameAs a rdf:Property ;
     rdfs:range ftm:LegalEntity ;
     owl:inverseOf <https://w3id.org/ftm#LegalEntity:predecessors> .
 
-<https://w3id.org/ftm#Table:rows> a rdf:Property ;
-    rdfs:label "Rows" ;
-    rdfs:domain ftm:Table ;
-    rdfs:isDefinedBy ftm: ;
-    rdfs:range ftm:Row ;
-    owl:inverseOf dct:isPartOf .
-
 <https://w3id.org/ftm#TaxRoll:taxee> a rdf:Property ;
     rdfs:label "Taxee" ;
     rdfs:domain ftm:TaxRoll ;
@@ -2583,6 +2703,13 @@ owl:sameAs a rdf:Property ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range ftm:CourtCaseParty ;
     owl:inverseOf <https://w3id.org/ftm#CourtCaseParty:party> .
+
+<https://w3id.org/ftm#Thing:documentedBy> a rdf:Property ;
+    rdfs:label "Documents" ;
+    rdfs:domain ftm:Thing ;
+    rdfs:isDefinedBy ftm: ;
+    rdfs:range ftm:Documentation ;
+    owl:inverseOf <https://w3id.org/ftm#Documentation:entity> .
 
 <https://w3id.org/ftm#Thing:proof> a rdf:Property ;
     rdfs:label "Source document" ;
@@ -2670,20 +2797,16 @@ owl:sameAs a rdf:Property ;
 
 dct:isPartOf a rdf:Property ;
     rdfs:label "Document",
-        "Folder",
-        "Table" ;
+        "Folder" ;
     rdfs:domain ftm:Document,
-        ftm:Page,
-        ftm:Row ;
+        ftm:Page ;
     rdfs:isDefinedBy ftm: ;
     rdfs:range ftm:Folder,
-        ftm:Pages,
-        ftm:Table ;
+        ftm:Pages ;
     owl:inverseOf <https://w3id.org/ftm#Folder:children>,
-        <https://w3id.org/ftm#Pages:pages>,
-        <https://w3id.org/ftm#Table:rows> .
+        <https://w3id.org/ftm#Pages:pages> .
 
 ftm: a owl:Ontology ;
     rdfs:label "Follow The Money" ;
-    dct:modified "2020-04-07T13:01:22"^^xsd:dateTime .
+    dct:modified "2020-07-24T17:05:02"^^xsd:dateTime .
 

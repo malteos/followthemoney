@@ -10,6 +10,8 @@ Company:
     - jurisdiction
     - registrationNumber
     - incorporationDate
+  required:
+    - name
   caption:
     - name
   properties:

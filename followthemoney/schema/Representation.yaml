@@ -8,6 +8,9 @@ Representation:
     - agent
     - client
     - role
+  required:
+    - agent
+    - client
   edge: # AGENT represents CLIENT
     source: agent
     label: "represents"

@@ -29,11 +29,11 @@ def remove_checksums(proxy):
 def simplify_provenance(proxy):
     """If there are multiple dates given for some of the provenance
     fields, we can logically conclude which one is the most meaningful."""
-    for prop_name in ['modifiedAt', 'retrievedAt']:
+    for prop_name in ["modifiedAt", "retrievedAt"]:
         if proxy.has(prop_name, quiet=True):
             values = proxy.get(prop_name)
             proxy.set(prop_name, max(values))
-    for prop_name in ['authoredAt', 'publishedAt']:
+    for prop_name in ["authoredAt", "publishedAt"]:
         if proxy.has(prop_name, quiet=True):
             values = proxy.get(prop_name)
             proxy.set(prop_name, min(values))
@@ -42,18 +42,18 @@ def simplify_provenance(proxy):
 
 def entity_filename(proxy, base_name=None, extension=None):
     """Derive a safe filename for the given entity."""
-    if proxy.schema.is_a('Document'):
-        for extension_ in proxy.get('extension', quiet=True):
+    if proxy.schema.is_a("Document"):
+        for extension_ in proxy.get("extension", quiet=True):
             if extension is not None:
                 break
             extension = extension_
-        for file_name in proxy.get('fileName', quiet=True):
+        for file_name in proxy.get("fileName", quiet=True):
             base_name_, extension_ = splitext(file_name)
             if base_name is None and len(base_name_):
                 base_name = base_name_
             if extension is None and len(extension_):
                 extension = extension_
-        for mime_type in proxy.get('mimeType', quiet=True):
+        for mime_type in proxy.get("mimeType", quiet=True):
             if extension is not None:
                 break
             extension = guess_extension(mime_type)
@@ -65,12 +65,27 @@ def name_entity(entity):
     """If an entity has multiple names, pick the most central one
     and set all the others as aliases. This is awkward given that
     names aren't special and may not always be the caption."""
-    if entity.schema.is_a('Thing'):
-        names = entity.get('name')
+    if entity.schema.is_a("Thing"):
+        names = entity.get("name")
         if len(names) > 1:
             name = registry.name.pick(names)
             if name in names:
                 names.remove(name)
-            entity.set('name', name)
-            entity.add('alias', names)
+            entity.set("name", name)
+            entity.add("alias", names)
     return entity
+
+
+def inline_names(entity, related):
+    """Attempt to solve a weird UI problem. Imagine, for example, we
+    are showing a list of payments between a sender and a beneficiary to
+    a user. They may now conduct a search for a term present in the sender
+    or recipient name, but there will be no result, because the name is
+    only indexed with the parties, but not in the payment. This is part of
+    a partial work-around to that.
+
+    This is really bad in theory, but really useful in practice. Shoot me.
+    """
+    prop = entity.schema.get("namesMentioned")
+    if prop is not None:
+        entity.add(prop, related.get_type_values(registry.name))

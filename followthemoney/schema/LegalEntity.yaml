@@ -5,15 +5,24 @@ LegalEntity:
   description: "A legal entity may be a person or a company."
   matchable: true
   featured:
-  - name
-  - legalForm
-  - country
+    - name
+    - country
+    - legalForm
+    - status
+  required:
+    - name
   caption:
-  - name
-  - email
-  - phone
-  - registrationNumber
+    - name
+    - email
+    - phone
+    - registrationNumber
   properties:
+    name:
+      # This is normally defined as a string, here it becomes a name
+      # typed-string to be shown in relevant facets etc.
+      label: Name
+      type: name
+      rdf: http://www.w3.org/2004/02/skos/core#prefLabel
     email:
       label: E-Mail
       type: email
@@ -105,20 +114,9 @@ LegalEntity:
       type: identifier
     parent:
       label: "Parent company"
+      description: "If this entity is a subsidiary, another entity (company or organisation) is its parent"
       reverse:
+        label: "Subsidiaries"
         name: subsidiaries
       type: entity
       range: LegalEntity
-      description: "If this entity is a subsidiary, another entity (company or organisation) is its parent"
-    subsidiaries:
-      label: "Subsidiaries"
-      reverse:
-        name: parent
-      type: entity
-      range: LegalEntity
-    passport:
-      label: "Passports"
-      type: entity
-      range: Passport
-      reverse:
-        name: holder
