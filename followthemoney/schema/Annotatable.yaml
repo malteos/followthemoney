@@ -30,3 +30,7 @@ Annotatable:
     annotatedEntitiesClass:
       label: "Class of annotated entities"
       type: string
+    # User status (accepted, skipped, rejected)
+    annotatedUserStatus:
+      label: "Annotated user status"
+      type: string
