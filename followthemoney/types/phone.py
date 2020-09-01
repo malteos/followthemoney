@@ -53,16 +53,21 @@ class PhoneType(PropertyType):
     def country_hint(self, value):
         try:
             number = parse_number(value)
-            return geocoder.region_code_for_number(number).lower()
+            code = geocoder.region_code_for_number(number)
+            if code is not None:
+                return code.lower()
         except NumberParseException:
-            pass
+            return None
 
     def _specificity(self, value):
         # TODO: insert artificial intelligence here.
         return dampen(6, 11, value)
 
     def rdf(self, value):
-        return URIRef("tel:%s" % value)
+        return URIRef(self.node_id(value))
+
+    def node_id(self, value):
+        return f"tel:{value}"
 
     def caption(self, value):
         number = parse_number(value)

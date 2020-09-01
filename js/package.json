@@ -1,6 +1,6 @@
 {
   "name": "@alephdata/followthemoney",
-  "version": "2.0.1",
+  "version": "2.1.7",
   "description": "JavaScript version of the followthemoney data model",
   "keywords": [],
   "main": "dist/followthemoney.umd.js",
@@ -82,11 +82,11 @@
     "shelljs": "^0.8.3",
     "svgo": "^1.3.0",
     "ts-jest": "^25.0.0",
-    "ts-node": "^8.4.1",
+    "ts-node": "^9.0.0",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^9.0.0",
-    "typedoc": "^0.17.3",
+    "typedoc": "^0.18.0",
     "typescript": "^3.6.3"
   },
   "dependencies": {

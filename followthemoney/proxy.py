@@ -1,5 +1,4 @@
 import logging
-from hashlib import sha1
 from itertools import product
 from rdflib import Literal, URIRef  # type: ignore
 from rdflib.namespace import RDF, SKOS  # type: ignore
@@ -7,8 +6,8 @@ from banal import ensure_dict
 
 from followthemoney.exc import InvalidData
 from followthemoney.types import registry
-from followthemoney.util import sanitize_text, key_bytes, gettext
-from followthemoney.util import merge_context, value_list
+from followthemoney.util import sanitize_text, gettext
+from followthemoney.util import merge_context, value_list, make_entity_id
 
 log = logging.getLogger(__name__)
 
@@ -49,16 +48,7 @@ class EntityProxy(object):
         """Generate a (hopefully unique) ID for the given entity, composed
         of the given components, and the key_prefix defined in the proxy.
         """
-        digest = sha1()
-        if self.key_prefix:
-            digest.update(key_bytes(self.key_prefix))
-        base = digest.digest()
-        for part in parts:
-            digest.update(key_bytes(part))
-        if digest.digest() == base:
-            self.id = None
-            return
-        self.id = digest.hexdigest()
+        self.id = make_entity_id(*parts, key_prefix=self.key_prefix)
         return self.id
 
     def _prop_name(self, prop, quiet=False):
@@ -124,9 +114,7 @@ class EntityProxy(object):
                     # log.warning(msg, prop.name)
                     continue
             self._size += value_size
-
-            if prop_name not in self._properties:
-                self._properties[prop_name] = set()
+            self._properties.setdefault(prop_name, set())
             self._properties[prop_name].add(value)
 
     def set(self, prop, values, cleaned=False, quiet=False):
@@ -226,10 +214,11 @@ class EntityProxy(object):
         imply a country that may be associated with the entity.
         """
         countries = set(self.countries)
-        for (prop, value) in self.itervalues():
-            hint = prop.type.country_hint(value)
-            if hint is not None:
-                countries.add(hint)
+        if not len(countries):
+            for (prop, value) in self.itervalues():
+                hint = prop.type.country_hint(value)
+                if hint is not None:
+                    countries.add(hint)
         return countries
 
     @property
@@ -253,7 +242,6 @@ class EntityProxy(object):
 
     def merge(self, other):
         model = self.schema.model
-        other = self.from_dict(model, other)
         self.id = self.id or other.id
         try:
             self.schema = model.common_schema(self.schema, other.schema)
@@ -262,11 +250,8 @@ class EntityProxy(object):
             raise InvalidData(msg % (self.id, e))
 
         self.context = merge_context(self.context, other.context)
-        self._size = 0
         for prop, values in other._properties.items():
-            self._properties.setdefault(prop, set())
-            self._properties[prop].update(values)
-            self._size += sum([len(v) for v in self._properties[prop]])
+            self.add(prop, values, cleaned=True, quiet=True)
         return self
 
     def __str__(self):
@@ -282,7 +267,10 @@ class EntityProxy(object):
         return hash(self.id)
 
     def __eq__(self, other):
-        return self.id == other.id
+        try:
+            return self.id == other.id
+        except AttributeError:
+            return False
 
     @classmethod
     def from_dict(cls, model, data, cleaned=True):

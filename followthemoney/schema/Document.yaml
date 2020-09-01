@@ -58,6 +58,13 @@ Document:
       label: "Language"
       type: language
       rdf: http://purl.org/dc/terms/language
+    translatedSourceLanguage:
+      # TODO: how is this different from `detectedLanguage`?
+      label: "The language of the source document detected when the body text was translated"
+      type: language
+    translatedLanguage:
+      label: "The language of the translated text"
+      type: language
     date:
       label: "Date"
       description: "If not otherwise specified"
@@ -114,6 +121,10 @@ PlainText:
       label: "Text"
       hidden: true
       type: "text"
+    translatedText:
+      label: "Translated version of the body text"
+      hidden: true
+      type: text
 
 Pages:
   # Like PDF, word document, ...
@@ -135,6 +146,9 @@ Pages:
       label: "PDF alternative version checksum"
       hidden: true
       type: checksum
+    hasTranslatedText:
+      label: "Indicates if the pages have translated text. When present and non-zero, pages have alt text"
+      type: number
 
 Folder:
   extends: Document
@@ -198,6 +212,10 @@ Image:
       label: "Text"
       type: "text"
       hidden: true
+    translatedText:
+      label: "Translated version of the body text"
+      hidden: true
+      type: text
 
 Video:
   extends: Document
@@ -267,6 +285,10 @@ HyperText:
       label: "HTML"
       type: html
       hidden: true
+    translatedText:
+      label: "Translated version of the body text"
+      hidden: true
+      type: text
 
 Email:
   extends:
