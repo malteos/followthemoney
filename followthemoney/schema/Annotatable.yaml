@@ -1,0 +1,36 @@
+Annotatable:
+  label: Annotatable
+  plural: Annotatables
+  abstract: true
+  matchable: false
+  generated: true
+  properties:
+    # translation
+    annotatedTranslations:
+      label: "Annotated translation"
+      type: text
+    annotatedTranslationsLanguage:
+      label: "Language of annotated translation"
+      type: language
+    # topic
+    annotatedTopics:
+      label: "Annotated topic"
+      type: string
+    # NER
+    annotatedEntities:
+      label: "Annotated entities"   # can be null
+      type: entity
+    annotatedEntitiesAnchor:
+      label: "Anchor text of annotated entities"
+      type: string
+    annotatedEntitiesPosition:
+      label: "Position of annotated entities in bodyText"
+      type: json
+      hidden: true
+    annotatedEntitiesClass:
+      label: "Class of annotated entities"
+      type: string
+    # User status (accepted, skipped, rejected)
+    annotatedUserStatus:
+      label: "Annotated user status"
+      type: string

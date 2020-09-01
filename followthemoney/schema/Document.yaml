@@ -2,6 +2,7 @@ Document:
   extends:
     - Thing
     - Analyzable
+    - Annotatable
   label: File
   plural: Files
   matchable: false
